@@ -18,13 +18,9 @@ namespace ACotGK_seng_Extractor
             for (int i = 0; i < fileCount - 1; i++)
             {
                 br.ReadInt32();
-                string name = NullTerminatedString();
-                if (br.BaseStream.Position < (i + 1) * 0x4C + 0x48)
-                    br.BaseStream.Position = (i + 1) * 0x4C + 0x48;
-
                 fileTable.Add(new SUBFILE
                 {
-                    name = name,
+                    name = new string(br.ReadChars(64)).TrimEnd('\0'),
                     offset = br.ReadInt32(),
                     size = br.ReadInt32()
                 });
@@ -45,21 +41,6 @@ namespace ACotGK_seng_Extractor
             public string name;
             public int offset;
             public int size;
-        }
-
-        public static string NullTerminatedString()
-        {
-            char[] fileName = Array.Empty<char>();
-            char readchar = (char)1;
-            while (readchar > 0)
-            {
-                readchar = br.ReadChar();
-                Array.Resize(ref fileName, fileName.Length + 1);
-                fileName[^1] = readchar;
-            }
-            Array.Resize(ref fileName, fileName.Length - 1);
-            string name = new(fileName);
-            return name;
         }
     }
 }
