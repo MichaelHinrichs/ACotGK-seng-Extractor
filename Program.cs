@@ -1,5 +1,4 @@
-﻿//Written for The Accursed Crown of the Giant King. https://store.steampowered.com/app/1970780/
-using System;
+﻿//Written for The Accursed Crown of the Giant King. https://store.steampowered.com/app/1970780
 using System.IO;
 
 namespace ACotGK_seng_Extractor
@@ -25,6 +24,7 @@ namespace ACotGK_seng_Extractor
                     size = br.ReadInt32()
                 });
             }
+
             foreach (SUBFILE sub in fileTable)
             {
                 br.BaseStream.Position = sub.offset;
